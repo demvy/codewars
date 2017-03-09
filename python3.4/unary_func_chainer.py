@@ -8,12 +8,11 @@ Should yield the same result as
 d(c(b(a(input))))
 
 """
+import functools
 
 
 def chained(functions):
-    for func in functions:
-        func(functions[functions.index(func):])
-    return None
+    return lambda x: functools.reduce(lambda val, y: y(val), functions, x)
 
 
 def f1(x): return x*2
@@ -26,3 +25,4 @@ def f6(xs): return "_".join(xs)
 
 if __name__ == "__main__":
     print(chained([f1, f2, f3])(0))
+    print(chained([f1, f2, f3])(2))
