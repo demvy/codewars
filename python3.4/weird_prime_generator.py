@@ -39,19 +39,15 @@ from collections import Counter
 
 
 def is_prime(a):
-    return all(a % i for i in xrange(2, a))
-
-
-def a(n):
-    if n == 1:
-        return 7
-    return a(n-1) + gcd(n, a(n - 1))
+    return all(a % i for i in range(2, a))
 
 
 def an(n):
     lst = [7]
-    for i in range(2, n + 1):
-        lst.append(a(n))
+    i = 1
+    while i < n:
+        lst.append(lst[i - 1] + gcd(i + 1, lst[i - 1]))
+        i += 1
     return lst
 
 
@@ -67,11 +63,16 @@ def count_ones(n):
 
 
 def p(n):
-    return [el for el in gn(n) if is_prime(el)]
+    lst = list(set(list(filter((1).__ne__, gn(n * 20)))))
+    return lst[:n]
 
 
 def max_pn(n):
-    return max(p(n))
+    #print(p(n))
+    if len(p(n)):
+        return max(p(n))
+    else:
+        return 2
 
 
 def an_over(n):
@@ -79,9 +80,12 @@ def an_over(n):
 
 
 def an_over_average(n):
-    return sum(an_over(n)) / len(an_over(n))
+    return round(sum(an_over(n)) / len(an_over(n)))
 
 if __name__ == "__main__":
-    print(an(10))
-    print(count_ones(10)) #8
-    print(count_ones(100)) #90
+    print(an(14))
+    #print(count_ones(10)) #8
+    #print(count_ones(100)) #90
+    print(max_pn(5))#, 47)
+    print(max_pn(7)) #101)
+    #print(an_over_average(5))#, 3)
