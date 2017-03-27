@@ -63,29 +63,44 @@ def count_ones(n):
 
 
 def p(n):
-    lst = list(set(list(filter((1).__ne__, gn(n * 20)))))
-    return lst[:n]
+    lst = [el for el in gn(n*1000) if el != 1]
+    out = list()
+    for el in lst:
+        if el not in out:
+            out.append(el)
+    return out[:n]
 
 
 def max_pn(n):
-    #print(p(n))
-    if len(p(n)):
-        return max(p(n))
-    else:
-        return 2
+#   if len(p(n)):
+    return max(p(n))
 
 
 def an_over(n):
-    return [an(i)[-1]/i for i in range(2, n)]
+    g = gn(n * 10000)
+    lst = list()
+    i = 0
+    while len(lst) < n:
+        if g[i] != 1:
+            #print(i, an(i), g[i])
+            lst.append(an(i)[-1]/i)
+            #print(lst[-1])
+        i += 1
+    return lst
+    #return [an(i)[-1]/i for i, c in enumerate(g) if g[i] != 1][:n]
 
 
 def an_over_average(n):
+    #if len(an_over(n)) != 0:
+    #print(an_over(n))
     return round(sum(an_over(n)) / len(an_over(n)))
+    #else:
+     #   return 3
 
 if __name__ == "__main__":
     print(an(14))
     #print(count_ones(10)) #8
     #print(count_ones(100)) #90
-    print(max_pn(5))#, 47)
-    print(max_pn(7)) #101)
-    #print(an_over_average(5))#, 3)
+    #print(max_pn(1))#, 47)
+    #print(max_pn(15)) #101)
+    print(an_over_average(66))#, 3)
