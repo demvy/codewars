@@ -1,0 +1,61 @@
+__author__ = 'valeriy'
+
+"""
+We have a square matrix M of dimension n x n that has positive and negative numbers in the ranges [-9,-1] and [0,9],( the value 0 is excluded).
+
+We want to add up all the products of the elements of the diagonals UP-LEFT to DOWN-BOTTOM, that is the value ofsum1; and the elements of the diagonals UP-RIGHT to LEFT-DOWN and that is sum2. Then, as a final result, the value of sum1 - sum2.
+
+E.g.
+
+M = [[ 1,  4, 7,  6,  5],
+     [-3,  2, 8,  1,  3],
+     [ 6,  2, 9,  7, -4],
+     [ 1, -2, 4, -2,  6],
+     [ 3,  2, 2, -4,  7]]
+Let's see how to get this result in the image below:
+
+source: imgur.com
+
+So the value of sum1 - sum2 is equal to:
+
+1164 - 66 = 1098
+Create the code to do this calculation.
+
+Features of the random tests:
+
+Numbers of tests = 150
+10 < dimension < 25 (python and ruby)
+10 < dimension < 20 (javascript)
+-10 < M[i,j] < 0 and 0 < M[i,j] < 10
+This kata is available in Python2, Ruby and Javascript by the moment. Translations into another languages will be released soon. Enjoy it!
+"""
+
+
+def sum_prod_diags(matrix):
+    # your code here
+    sum1 = 0
+    for i in range(len(matrix), 0, -1):
+        for j in range(len(matrix), 0, -1):
+            sum1 += matrix[i][]
+    return [[]]
+
+
+if __name__ == "__main__":
+    M1 = [[1,  4, 7,  6,  5],
+          [-3,  2, 8,  1,  3],
+          [6,  2, 9,  7, -4],
+          [1, -2, 4, -2,  6],
+          [3,  2, 2, -4,  7]]
+    print(sum_prod_diags(M1) == 1098)
+
+    M2 = [[ 1,  4, 7,  6],
+          [-3,  2, 8,  1],
+          [ 6,  2, 9,  7],
+          [ 1, -2, 4, -2]]
+    print(sum_prod_diags(M2) == -11)
+    M3 = [[1, 2, 3, 2, 1],
+          [2, 3, 4, 3, 2],
+          [3, 4, 5, 4, 3],
+          [4, 5, 6, 5, 4],
+          [5, 6, 7, 6, 5]]
+    print(sum_prod_diags(M3) == 0)
