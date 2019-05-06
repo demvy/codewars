@@ -23,25 +23,42 @@ std::string tickets(const std::vector<int> peopleInLine){
 	if (peopleInLine.size())
 	{
 		std::vector<int> cash_box = {};
-		std::map<int, std::vector<int>> change_map = {{25, {0}}, {50, {25}}, {100, {25, 50}}};
+		std::map<int, std::vector<std::vector<int>>> change_map = {{25, {{0}}}, {50, {{25}}}, {100, {{25, 50}, {25, 25, 25}}}};
 		std::vector<int>::iterator where;
+		std::vector<std::vector<int>>::iterator j;
 
 		for(auto it = peopleInLine.begin(); it < peopleInLine.end(); it++)
 		{
-			if (change_map[*it][0])
+			if (change_map[*it][0][0])
 			{
 				// Check if we have change for people's cache
-				for(auto j = change_map[*it].begin(); j < change_map[*it].end(); j++)
-				{
-					where = find(cash_box.begin(), cash_box.end(), *j);
+				int res = 1; // result of check all vectors for money value
 
-					if (where == cash_box.end())
-						return "NO";
-					else
-						cash_box.erase(where); // Delete change fron cash box if we have it
+				for(j = change_map[*it].begin(); j < change_map[*it].end(); j++)
+				{
+					for (auto k = (*j).begin(); k < (*j).end(); k++)
+					{
+						where = find(cash_box.begin(), cash_box.end(), *k);
+
+						if (where == cash_box.end())
+							res = 0;
+					}
+					if (res)
+						break;
 				}
-				// If we have all change, add people's money to cash box
-				cash_box.push_back(*it);
+				if (res)
+				{
+					for (auto k = (*j).begin(); k < (*j).end(); k++)
+					{
+						where = find(cash_box.begin(), cash_box.end(), *k);
+						// Delete change fron cash box if we have it
+						cash_box.erase(where);
+					}
+					// If we have all change, add people's money to cash box
+					cash_box.push_back(*it);
+				}
+				else
+					return "NO";
 			}
 			else
 				cash_box.push_back(*it);
