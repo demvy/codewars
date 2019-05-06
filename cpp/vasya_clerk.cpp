@@ -29,7 +29,7 @@ std::string tickets(const std::vector<int> peopleInLine){
 
 		for(auto it = peopleInLine.begin(); it < peopleInLine.end(); it++)
 		{
-			if (change_map[*it][0][0])
+			if (*it == 50 || *it == 100)
 			{
 				// Check if we have change for people's cache
 				int res; // result of check all vectors for money value
@@ -37,14 +37,14 @@ std::string tickets(const std::vector<int> peopleInLine){
 				for(j = change_map[*it].begin(); j < change_map[*it].end(); j++)
 				{
 					res = 1;
+
 					for (auto k = (*j).begin(); k < (*j).end(); k++)
 					{
 						where = find(cash_box.begin(), cash_box.end(), *k);
-
 						if (where == cash_box.end())
 							res = 0;
 					}
-					if (res) 
+					if (res)
 						break;
 				}
 				if (res)
@@ -52,8 +52,11 @@ std::string tickets(const std::vector<int> peopleInLine){
 					for (auto k = (*j).begin(); k < (*j).end(); k++)
 					{
 						where = find(cash_box.begin(), cash_box.end(), *k);
-						// Delete change fron cash box if we have it
-						cash_box.erase(where);
+						if (where != cash_box.end())
+							// Delete change fron cash box if we have it
+							cash_box.erase(where);
+						else
+							return "NO";
 					}
 					// If we have all change, add people's money to cash box
 					cash_box.push_back(*it);
@@ -71,7 +74,7 @@ std::string tickets(const std::vector<int> peopleInLine){
 int main(void)
 {
 	//Should return YES, 25*3 can be change for 100
-	std::vector<int> a = {25,50,25,100,25,25,50,100,25,25,25,100,25,25,50,100,25,50,25,100,25,50,50};
+	std::vector<int> a = {25,100};
 
 	std::cout << tickets(a) << std::endl;
 	return 0;
