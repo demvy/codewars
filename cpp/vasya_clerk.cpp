@@ -32,10 +32,11 @@ std::string tickets(const std::vector<int> peopleInLine){
 			if (change_map[*it][0][0])
 			{
 				// Check if we have change for people's cache
-				int res = 1; // result of check all vectors for money value
-
+				int res; // result of check all vectors for money value
+				
 				for(j = change_map[*it].begin(); j < change_map[*it].end(); j++)
 				{
+					res = 1;
 					for (auto k = (*j).begin(); k < (*j).end(); k++)
 					{
 						where = find(cash_box.begin(), cash_box.end(), *k);
@@ -43,7 +44,7 @@ std::string tickets(const std::vector<int> peopleInLine){
 						if (where == cash_box.end())
 							res = 0;
 					}
-					if (res)
+					if (res) 
 						break;
 				}
 				if (res)
@@ -70,7 +71,7 @@ std::string tickets(const std::vector<int> peopleInLine){
 int main(void)
 {
 	//Should return YES, 25*3 can be change for 100
-	std::vector<int> a = {25,50,25,100,25,25,50,100,25,25,25,100,25,25,50,100,25,50,25,100,25,50,50,50};
+	std::vector<int> a = {25,50,25,100,25,25,50,100,25,25,25,100,25,25,50,100,25,50,25,100,25,50,50};
 
 	std::cout << tickets(a) << std::endl;
 	return 0;
