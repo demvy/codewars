@@ -31,7 +31,35 @@ N.B. You should assume that all the test input will be valid, as specified above
 P.S. The situation in this kata can be likened to the more-computer-science-related idea of a thread pool, with relation to running multiple processes at the same time: https://en.wikipedia.org/wiki/Thread_pool
 */
 
+#include <iostream>
+#include <vector>
+#include <algorithm>
 
 long queueTime(std::vector<int> customers,int n){
+	if (customers.size() && n > 0) {
+		std::vector<int> tills(customers.begin(), (customers.begin() + n < customers.end()) ? customers.begin() + n : customers.end());
+		long res = 0;
+		int min = 0;
+		auto it = customers.begin() + n;
 
+		while (it < customers.end()) {
+			min = *(std::min_element(tills.begin(), tills.end()));
+			res += min;
+			for (auto el = tills.begin(); el < tills.end(); el++) {
+				*el -= min;
+				if (*el <= 0) {
+					*el = (it < customers.end()) ? *it++: 0;
+				}
+			}
+		}
+
+		return res + *(std::max_element(tills.begin(), tills.end()));
+	}
+	return 0;
+}
+
+int main(void) {
+	std::cout << queueTime(std::vector<int>{4,2,6,8,178,14,3,7,8,11,56}, 3) << std::endl;
+	std::cout << queueTime(std::vector<int>{1,1,1,1}, 3) << std::endl;
+	std::cout << queueTime(std::vector<int>{6,3,1,7,5,4}, 2) << std::endl;
 }
